@@ -11,6 +11,9 @@ http://gist.github.com/Pelirrojo
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
+    <!-- NVD3 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.css" />
+
 
 </head>
 
@@ -23,14 +26,14 @@ http://gist.github.com/Pelirrojo
         </div>
 
         <div class="col-md-8 col-md-offset-2">
-            <div id="iframe1" class="well">
-                <p>cosa 1</p>
+            <div id="chart" class="well">
+                <svg width="960" height="500"></svg>
             </div>
         </div>
 
         <div class="col-md-8 col-md-offset-2">
-            <div id="iframe2" class="well">
-                <p>cosa 2</p>
+            <div id="chart2" class="well">
+                <svg width="960" height="500"></svg>
             </div>
         </div>
     </div>
@@ -41,8 +44,99 @@ http://gist.github.com/Pelirrojo
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.3.9/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.js"></script>
 <script>
 
+  //Regular pie chart example
+  nv.addGraph(function() {
+    var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true);
+
+    d3.select("#chart svg")
+      .datum(exampleData())
+      .transition()
+      .duration(350)
+      .call(chart);
+
+    return chart;
+  });
+
+  //Pie chart example data. Note how there is only a single array of key-value pairs.
+  function exampleData() {
+    return  [
+      {
+        "label": "One",
+        "value" : 29.765957771107
+      } ,
+      {
+        "label": "Two",
+        "value" : 0
+      } ,
+      {
+        "label": "Three",
+        "value" : 32.807804682612
+      } ,
+      {
+        "label": "Four",
+        "value" : 196.45946739256
+      } ,
+      {
+        "label": "Five",
+        "value" : 0.19434030906893
+      } ,
+      {
+        "label": "Six",
+        "value" : 98.079782601442
+      } ,
+      {
+        "label": "Seven",
+        "value" : 13.925743130903
+      } ,
+      {
+        "label": "Eight",
+        "value" : 5.1387322875705
+      }
+    ];
+  }
+
+  //Line Plus Bar Chart
+  d3.json("http://nvd3.org/examples/linePlusBarData.json",function(error,data) {
+    nv.addGraph(function() {
+      var chart = nv.models.linePlusBarChart()
+        .margin({top: 30, right: 60, bottom: 50, left: 70})
+        //We can set x data accessor to use index. Reason? So the bars all appear evenly spaced.
+        .x(function(d,i) { return i })
+        .y(function(d,i) {return d[1] })
+      ;
+
+      chart.xAxis.tickFormat(function(d) {
+        var dx = data[0].values[d] && data[0].values[d][0] || 0;
+        return d3.time.format('%x')(new Date(dx))
+      });
+
+      chart.y1Axis
+        .tickFormat(d3.format(',f'));
+
+      chart.y2Axis
+        .tickFormat(function(d) { return '$' + d3.format(',f')(d) });
+
+      chart.bars.forceY([0]);
+
+      d3.select('#chart2 svg')
+        .datum(data)
+        .transition()
+        .duration(0)
+        .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+
+  });
 
 
 </script>
