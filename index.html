@@ -103,7 +103,7 @@ http://gist.github.com/Pelirrojo
   }
 
   //Line Plus Bar Chart
-  d3.json("http://nvd3.org/examples/linePlusBarData.json",function(error,data) {
+  d3.json("http://localhost:3000/data",function(error,data) {
     nv.addGraph(function() {
       var chart = nv.models.linePlusBarChart()
         .margin({top: 30, right: 60, bottom: 50, left: 70})
