@@ -32,8 +32,9 @@ Another term for the backend:
 
 ```shell
   
-  # Install express (locally inside the project folder)
+  # Install express (locally inside the project folder) and dependencies
   $ npm install express
+  $ npm install cors
   
   # Run
   # node server.js
