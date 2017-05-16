@@ -1,0 +1,91 @@
+<html>
+  <head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.css" />
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.3.0/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.5/nv.d3.min.js"></script>
+
+  <style>
+
+#chart svg {
+  height: 400px;
+}
+
+</style>
+
+    <script type="text/javascript">
+
+    var data =  [
+      {
+        "label": "One",
+        "value" : 29.765957771107
+      } ,
+      {
+        "label": "Two",
+        "value" : 0
+      } ,
+      {
+        "label": "Three",
+        "value" : 32.807804682612
+      } ,
+      {
+        "label": "Four",
+        "value" : 196.45946739256
+      } ,
+      {
+        "label": "Five",
+        "value" : 0.19434030906893
+      } ,
+      {
+        "label": "Six",
+        "value" : 98.079782601442
+      } ,
+      {
+        "label": "Seven",
+        "value" : 13.925743130903
+      } ,
+      {
+        "label": "Eight",
+        "value" : 5.1387322875705
+      }
+    ]
+    const url = 'https://jsonplaceholder.typicode.com/posts/1'
+
+    d3.json(url, (json) => {
+
+      console.log(json)
+
+    });
+
+
+      nv.addGraph(() => {
+
+
+    var chart = nv.models.pieChart()
+      .x((d) => { return d.label })
+      .y((d) => { return d.value })
+      .showLabels(true);
+
+      //code here
+    d3.select("#chart svg")
+        .datum(data)
+        .transition()
+        .duration(1200)
+        .call(chart);
+
+    
+
+  return chart;
+});
+
+    </script>
+  </head>
+  
+  <body>
+    <div id="chart">
+      <svg></svg>
+    </div>
+  </body>
+
+</html>
