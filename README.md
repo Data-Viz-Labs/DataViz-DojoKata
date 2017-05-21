@@ -16,8 +16,7 @@ To run, you need:
 
 One term for the frontend:
 
-```shell
-
+```
   # Install http-server (globally as tool)
   $ npm install -g http-server
   
@@ -25,20 +24,18 @@ One term for the frontend:
   $ hs
   
   # Go to your browser: http://localhost:8080
-
-```shell
+```
 
 Another term for the backend:
 
-```shell
-  
+
+```
   # Install express (locally inside the project folder) and dependencies
   $ npm install express
   $ npm install cors
   
   # Run
   # node server.js
-
-```shell
+```
 
 
